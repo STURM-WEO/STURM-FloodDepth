@@ -11,6 +11,9 @@ data
 *.Identifier
 models
 tmpoutputs
+sample
 .venv
 *.zip
 outputs
+docs
+CrossViewGeolocation.ipynb
