@@ -16,4 +16,6 @@ sample
 *.zip
 outputs
 docs
-CrossViewGeolocation.ipynb
+*.pdf
+cvcities
+cvcities.ipynb

@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 import tensorflow as tf
 
-def draw_bounding_boxes(image_path, label_path):
+def draw_bounding_boxes(image_path, label_path, show_class=True):
     # Read the image
     image = cv2.imread(image_path)
     height, width, _ = image.shape
@@ -35,12 +35,13 @@ def draw_bounding_boxes(image_path, label_path):
 
         # Draw the bounding box
         cv2.rectangle(image, (x1, y1), (x2, y2), (128, 0, 32), 2)
-        # Put the label text above the bounding box
-        cv2.putText(image, f'{int(class_id)}', (x1, y1 - 10), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.9, (128, 0, 32), 2)
+        if show_class:
+            # Put the label text above the bounding box
+            cv2.putText(image, f'{int(class_id)}', (x1, y1 - 10), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.9, (128, 0, 32), 2)
 
     return image
 
-def visualize_random_batch(image_folder, label_folder, batch_size=5):
+def visualize_random_batch(image_folder, label_folder, batch_size=5, show_class=True):
     # Get a list of all images and labels
     images = [f for f in os.listdir(image_folder) if f.endswith('.jpg')]
     labels = [f for f in os.listdir(label_folder) if f.endswith('.txt')]
@@ -63,7 +64,7 @@ def visualize_random_batch(image_folder, label_folder, batch_size=5):
         label_path = os.path.join(label_folder, corresponding_label)
 
         # Draw bounding boxes on the image
-        image_with_boxes = draw_bounding_boxes(image_path, label_path)
+        image_with_boxes = draw_bounding_boxes(image_path, label_path, show_class=show_class)
 
         # Convert BGR image to RGB
         image_with_boxes_rgb = cv2.cvtColor(image_with_boxes, cv2.COLOR_BGR2RGB)
